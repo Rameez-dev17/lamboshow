@@ -33,7 +33,7 @@ export default function ZondaScrollCanvas({
             img.src = src;
             img.onload = () => resolve(img);
             img.onerror = () => resolve(img); // Continue even on error
-          })
+          }),
         );
       }
 
@@ -79,33 +79,28 @@ export default function ZondaScrollCanvas({
     // Clamp between 0 and totalFrames - 1
     const frameIndex = Math.min(
       totalFrames - 1,
-      Math.max(0, Math.floor(progress * totalFrames))
+      Math.max(0, Math.floor(progress * totalFrames)),
     );
 
     const img = images[frameIndex];
     if (!img) return;
 
-    // "Object-fit: contain" logic with slight zoom to hide watermark "Veo"
-    // The watermark is likely at the edges. A scaling factor > 1 acts as a zoom.
-    const zoomFactor = 1.15; // 15% zoom to crop edges
-    
+    // "Object-fit: contain" logic
+    // Removed zoomFactor to show original size and clarity
+    const zoomFactor = 1.0;
+
     // Calculate ratio to cover/contain
     const hRatio = canvas.width / img.width;
     const vRatio = canvas.height / img.height;
-    // maximizing ratio to fill screen (cover) instead of contain might also help remove watermark if it's in letterbox
-    // But user asked for "contain" logic originally. 
-    // Let's stick to contain but scaled up.
+
+    // Use contain logic
     const ratio = Math.min(hRatio, vRatio) * zoomFactor;
 
     const centerShift_x = (canvas.width - img.width * ratio) / 2;
     const centerShift_y = (canvas.height - img.height * ratio) / 2;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    // Apply optional filter for sharpness directly on context if needed, but CSS is better for performance usually.
-    // However, drawing it slightly larger and downscaling is hard here since source is smaller than screen.
-    // We rely on high quality smoothing.
-    
+
     ctx.drawImage(
       img,
       0,
@@ -115,7 +110,7 @@ export default function ZondaScrollCanvas({
       centerShift_x,
       centerShift_y,
       img.width * ratio,
-      img.height * ratio
+      img.height * ratio,
     );
   };
 
@@ -127,9 +122,9 @@ export default function ZondaScrollCanvas({
   // Handle window resize and initial render
   useEffect(() => {
     if (isLoaded) {
-        render(scrollYProgress.get());
+      render(scrollYProgress.get());
     }
-    
+
     const handleResize = () => {
       if (isLoaded) render(scrollYProgress.get());
     };
@@ -138,10 +133,5 @@ export default function ZondaScrollCanvas({
     return () => window.removeEventListener("resize", handleResize);
   }, [isLoaded, images]);
 
-  return (
-    <canvas 
-      ref={canvasRef} 
-      className="absolute inset-0 w-full h-full filter contrast-125 saturate-110 drop-shadow-2xl" 
-    />
-  );
+  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />;
 }

@@ -5,10 +5,10 @@ import { motion, useScroll, useTransform } from "framer-motion";
 export default function Navbar() {
   const { scrollY } = useScroll();
   
-  // Glass effect increases as user scrolls
-  const backgroundOpacity = useTransform(scrollY, [0, 100], [0, 0.8]);
-  const backdropBlur = useTransform(scrollY, [0, 100], ["0px", "12px"]);
-  const borderOpacity = useTransform(scrollY, [0, 100], [0, 0.2]);
+  // Glass effect removed - always transparent
+  const backgroundOpacity = useTransform(scrollY, [0, 100], [0, 0]);
+  const backdropBlur = useTransform(scrollY, [0, 100], ["0px", "0px"]);
+  const borderOpacity = useTransform(scrollY, [0, 100], [0, 0]);
 
   return (
     <motion.nav
