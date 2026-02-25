@@ -5,6 +5,7 @@ import { useScroll } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import ZondaScrollCanvas from "@/components/ZondaScrollCanvas";
 import ZondaExperience from "@/components/ZondaExperience";
+import ContactSection from "@/components/ContactSection";
 
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -32,6 +33,9 @@ export default function Home() {
             <ZondaExperience scrollYProgress={scrollYProgress} />
         </div>
       </section>
+
+      {/* CONTACT & FEEDBACK SECTION */}
+      <ContactSection />
 
       {/* ADDITIONAL CONTENT (Below the scroll experience) */}
       <div className="relative z-20 bg-lamborghini-black border-t border-white/10">

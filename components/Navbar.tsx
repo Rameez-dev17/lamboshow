@@ -30,9 +30,9 @@ export default function Navbar() {
         </span>
       </div>
 
-      <button className="relative overflow-hidden group px-6 py-2 border border-white/20 text-white font-rajdhani font-semibold tracking-widest uppercase hover:bg-white hover:text-black transition-colors duration-300">
-        Inquire Now
-      </button>
+      <a href="#contact" className="relative overflow-hidden group px-6 py-2 border border-white/20 text-white font-rajdhani font-semibold tracking-widest uppercase hover:bg-white hover:text-black transition-colors duration-300">
+        Contact Now
+      </a>
     </motion.nav>
   );
 }
